@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.su.dao.ArticleDao" >
+  <resultMap id="BaseResultMap" type="com.su.entity.Article" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="TITLE" property="title" jdbcType="VARCHAR" />
+    <result column="SUMMARY" property="summary" jdbcType="VARCHAR" />
+    <result column="CREATETIME" property="createtime" jdbcType="VARCHAR" />
+    <result column="CREATEUSER" property="createuser" jdbcType="INTEGER" />
+    <result column="CREATEUSERNAME" property="createusername" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="IS_HOME" property="isHome" jdbcType="INTEGER" />
+    <result column="IS_TOP" property="isTop" jdbcType="INTEGER" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="VARCHAR" />
+    <result column="UPDATE_USER" property="updateUser" jdbcType="INTEGER" />
+    <result column="SPECIALTOPIC_ID" property="specialtopicId" jdbcType="INTEGER" />
+    <result column="KEYWORDS" property="keywords" jdbcType="INTEGER" />
+    <result column="IMAGE" property="image" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.su.entity.Article" extends="BaseResultMap" >
+    <result column="CONTENT" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, TITLE, SUMMARY, CREATETIME, CREATEUSER, CREATEUSERNAME, STATUS, IS_HOME, IS_TOP,
+    UPDATE_TIME, UPDATE_USER, SPECIALTOPIC_ID, KEYWORDS, IMAGE
+  </sql>
+  <sql id="Blob_Column_List" >
+    CONTENT
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from article
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from article
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.su.entity.Article" >
+
+    insert into article (ID, TITLE, SUMMARY,
+    CREATETIME, CREATEUSER, CREATEUSERNAME,
+    STATUS, IS_HOME, IS_TOP,
+    UPDATE_TIME, UPDATE_USER, SPECIALTOPIC_ID,
+    KEYWORDS, IMAGE, CONTENT
+    )
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR},
+    #{createtime,jdbcType=VARCHAR}, #{createuser,jdbcType=INTEGER}, #{createusername,jdbcType=VARCHAR},
+    #{status,jdbcType=VARCHAR}, #{isHome,jdbcType=INTEGER}, #{isTop,jdbcType=INTEGER},
+    #{updateTime,jdbcType=VARCHAR}, #{updateUser,jdbcType=INTEGER}, #{specialtopicId,jdbcType=INTEGER},
+    #{keywords,jdbcType=INTEGER}, #{image,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR}
+    )
+  </insert>
+  <insert id="insertSelective" parameterType="com.su.entity.Article" >
+
+    insert into article
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      ID,
+      <if test="title != null" >
+        TITLE,
+      </if>
+      <if test="summary != null" >
+        SUMMARY,
+      </if>
+      <if test="createtime != null" >
+        CREATETIME,
+      </if>
+      <if test="createuser != null" >
+        CREATEUSER,
+      </if>
+      <if test="createusername != null" >
+        CREATEUSERNAME,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="isHome != null" >
+        IS_HOME,
+      </if>
+      <if test="isTop != null" >
+        IS_TOP,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="updateUser != null" >
+        UPDATE_USER,
+      </if>
+      <if test="specialtopicId != null" >
+        SPECIALTOPIC_ID,
+      </if>
+      <if test="keywords != null" >
+        KEYWORDS,
+      </if>
+      <if test="image != null" >
+        IMAGE,
+      </if>
+      <if test="content != null" >
+        CONTENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{id,jdbcType=INTEGER},
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="summary != null" >
+        #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="createuser != null" >
+        #{createuser,jdbcType=INTEGER},
+      </if>
+      <if test="createusername != null" >
+        #{createusername,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="isHome != null" >
+        #{isHome,jdbcType=INTEGER},
+      </if>
+      <if test="isTop != null" >
+        #{isTop,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUser != null" >
+        #{updateUser,jdbcType=INTEGER},
+      </if>
+      <if test="specialtopicId != null" >
+        #{specialtopicId,jdbcType=INTEGER},
+      </if>
+      <if test="keywords != null" >
+        #{keywords,jdbcType=INTEGER},
+      </if>
+      <if test="image != null" >
+        #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.su.entity.Article" >
+    update article
+    <set >
+      <if test="title != null" >
+        TITLE = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="summary != null" >
+        SUMMARY = #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        CREATETIME = #{createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="createuser != null" >
+        CREATEUSER = #{createuser,jdbcType=INTEGER},
+      </if>
+      <if test="createusername != null" >
+        CREATEUSERNAME = #{createusername,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="isHome != null" >
+        IS_HOME = #{isHome,jdbcType=INTEGER},
+      </if>
+      <if test="isTop != null" >
+        IS_TOP = #{isTop,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUser != null" >
+        UPDATE_USER = #{updateUser,jdbcType=INTEGER},
+      </if>
+      <if test="specialtopicId != null" >
+        SPECIALTOPIC_ID = #{specialtopicId,jdbcType=INTEGER},
+      </if>
+      <if test="keywords != null" >
+        KEYWORDS = #{keywords,jdbcType=INTEGER},
+      </if>
+      <if test="image != null" >
+        IMAGE = #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        CONTENT = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.su.entity.Article" >
+    update article
+    set TITLE = #{title,jdbcType=VARCHAR},
+    SUMMARY = #{summary,jdbcType=VARCHAR},
+    CREATETIME = #{createtime,jdbcType=VARCHAR},
+    CREATEUSER = #{createuser,jdbcType=INTEGER},
+    CREATEUSERNAME = #{createusername,jdbcType=VARCHAR},
+    STATUS = #{status,jdbcType=VARCHAR},
+    IS_HOME = #{isHome,jdbcType=INTEGER},
+    IS_TOP = #{isTop,jdbcType=INTEGER},
+    UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+    UPDATE_USER = #{updateUser,jdbcType=INTEGER},
+    SPECIALTOPIC_ID = #{specialtopicId,jdbcType=INTEGER},
+    KEYWORDS = #{keywords,jdbcType=INTEGER},
+    IMAGE = #{image,jdbcType=VARCHAR},
+    CONTENT = #{content,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.su.entity.Article" >
+    update article
+    set TITLE = #{title,jdbcType=VARCHAR},
+    SUMMARY = #{summary,jdbcType=VARCHAR},
+    CREATETIME = #{createtime,jdbcType=VARCHAR},
+    CREATEUSER = #{createuser,jdbcType=INTEGER},
+    CREATEUSERNAME = #{createusername,jdbcType=VARCHAR},
+    STATUS = #{status,jdbcType=VARCHAR},
+    IS_HOME = #{isHome,jdbcType=INTEGER},
+    IS_TOP = #{isTop,jdbcType=INTEGER},
+    UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+    UPDATE_USER = #{updateUser,jdbcType=INTEGER},
+    SPECIALTOPIC_ID = #{specialtopicId,jdbcType=INTEGER},
+    KEYWORDS = #{keywords,jdbcType=INTEGER},
+    IMAGE = #{image,jdbcType=VARCHAR},    CONTENT = #{content}
+
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <!-- 查询总数量 -->
+  <select id="queryPageCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select count(id) as id from article where 1=1
+
+    <if test="keywordidstr != null">
+      and KEYWORDS in (SELECT id from specialtopic c where c.`NAME` = "WPS常见问题" or c.`NAME`= "Oracle常见问题" or c.`NAME` = "微软产品常见问题"or c.`NAME`= "WinRAR常见问题")
+    </if>
+    <if test="keywordId!=null">
+      and KEYWORDS=#{keywordId}
+    </if>
+    <if test="isHome!=null">
+      and IS_HOME=#{isHome}
+    </if>
+    <if test="specialId!=null">
+      and SPECIALTOPIC_ID=#{specialId}
+    </if>
+    order by  CREATETIME DESC ,UPDATE_TIME desc
+  </select>
+
+  <!-- 分页 -->
+  <select id="queryPage" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select  * from
+    article where 1=1
+
+    <if test="keywordidstr != null">
+      and KEYWORDS in (SELECT id from specialtopic c where c.`NAME` = "WPS常见问题" or c.`NAME`= "Oracle常见问题" or c.`NAME` = "微软产品常见问题"or c.`NAME`= "WinRAR常见问题")
+    </if>
+    <if test="keywordId!=null">
+      and KEYWORDS=#{keywordId}
+    </if>
+    <if test="specialId!=null">
+      and SPECIALTOPIC_ID=#{specialId}
+    </if>
+    <if test="isHome!=null">
+      and IS_HOME=#{isHome}
+    </if>
+    <if test="title!=null">
+
+      and INSTR(TITLE, #{title})
+    </if>
+
+    order by   CREATETIME  DESC ,UPDATE_TIME desc
+    limit #{beginIndex},#{endIndex}
+  </select>
+
+  <select id="loadAll" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select     ID, TITLE, SUMMARY, CREATETIME, CREATEUSER, CREATEUSERNAME, STATUS, IS_HOME, IS_TOP, KEYWORDS
+    UPDATE_TIME, UPDATE_USER, SPECIALTOPIC_ID,CONTENT,IMAGE from
+    article where 1=1
+
+    <if test="keywordId!=null">
+      and KEYWORDS=#{keywordId}
+    </if>
+    <if test="specialId!=null">
+      and SPECIALTOPIC_ID=#{specialId}
+    </if>
+    <if test="isHome!=null">
+      and IS_HOME=#{isHome}
+    </if>
+
+    <if test="title!=null">
+      and INSTR(TITLE, #{title})
+    </if>
+
+
+  </select>
+
+  <!-- 模糊查询文件标题 -->
+  <!-- <select id="queryByName" parameterType="java.lang.String"
+      resultType="BaseResultMap">
+      select TITLE from article where TITLE LIKE '%${title}%'
+  </select> -->
+</mapper>

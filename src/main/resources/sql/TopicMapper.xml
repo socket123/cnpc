@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.su.dao.TopicDao" >
+  <resultMap id="BaseResultMap" type="com.su.entity.Topic" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="CREATETIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATEUSER" property="createUser" jdbcType="VARCHAR" />
+    <result column="CREATEUSERNAME" property="createUserName" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="UPDATETIME" property="updateTime" jdbcType="VARCHAR" />
+    <result column="UPDATEUSER" property="updateUser" jdbcType="VARCHAR" />
+    <result column="SOFTWARE" property="software" jdbcType="VARCHAR" />
+   </resultMap>
+   
+   <insert id="addTopic" parameterType="com.su.entity.Topic" >
+	insert into specialtopic 
+	(NAME,CREATETIME,CREATEUSER,CREATEUSERNAME,STATUS,UPDATETIME,UPDATEUSER)
+	values
+	(
+	 #{name,jdbcType=VARCHAR},
+	 #{createTime,jdbcType=VARCHAR},
+	 #{createUser,jdbcType=VARCHAR},
+	 #{createUserName,jdbcType=VARCHAR},
+	 1,
+	 #{updateTime,jdbcType=VARCHAR},
+	 #{updateUser,jdbcType=VARCHAR})
+   </insert>
+   
+   <update id="delTopic" parameterType="Integer" >
+	update specialtopic
+	set STATUS = 0
+	where ID = #{id}
+   </update>
+   
+   <select id="queryPageCount" resultType="java.lang.Integer" parameterType="java.util.Map" >
+	select count(id) as id
+	from specialtopic
+	where STATUS = 1
+   </select>
+   
+   <select id="queryById" resultType="com.su.entity.Topic" parameterType="Integer">
+	 select * from specialtopic where STATUS = 1 and id=#{id} 
+   </select>
+	
+   <select id="verifyByName" resultType="com.su.entity.Topic" parameterType="java.lang.String">
+	select * from specialtopic where name=#{name} and STATUS = 1
+   </select>
+   
+   <select id="queryAll" resultMap="BaseResultMap" >
+	select * from specialtopic
+	where STATUS = 1
+   </select>
+   
+   <select id="queryPage" resultMap="BaseResultMap" parameterType="java.util.Map" >
+	select * from specialtopic
+	where STATUS = 1
+	limit #{beginIndex},#{endIndex}
+   </select>
+   
+   <update id="updateTopic" parameterType="com.su.entity.Topic" >
+	update specialtopic
+	set 
+	NAME=#{name,jdbcType=VARCHAR},
+	UPDATETIME=#{updateTime,jdbcType=VARCHAR},
+	UPDATEUSER=#{updateUser,jdbcType=VARCHAR}
+	where ID = #{id}
+   </update>
+   <select id="loadAll" parameterType="java.util.Map" resultMap="BaseResultMap">
+  select *
+	from specialtopic
+	where STATUS = 1
+  	
+
+</select>
+   
+</mapper>

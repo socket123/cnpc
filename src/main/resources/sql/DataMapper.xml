@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.su.dao.DataMapper" >
+  <resultMap id="BaseResultMap" type="com.su.entity.Data" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="URL" property="url" jdbcType="VARCHAR" />
+    <result column="CREATEUSER" property="createuser" jdbcType="VARCHAR" />
+    <result column="CREATETIME" property="createtime" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.su.entity.Data" extends="BaseResultMap" >
+    <result column="CONTENT" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, NAME, URL, CREATEUSER, CREATETIME, STATUS, TYPE
+  </sql>
+  <sql id="Blob_Column_List" >
+    CONTENT
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from data
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from data
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.su.entity.Data" >
+    insert into data (ID, NAME, URL,
+    CREATEUSER, CREATETIME, STATUS,
+    TYPE, CONTENT)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR},
+    #{createuser,jdbcType=VARCHAR}, #{createtime,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR},
+    #{type,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.su.entity.Data" >
+    insert into data
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      ID,
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="url != null" >
+        URL,
+      </if>
+      <if test="createuser != null" >
+        CREATEUSER,
+      </if>
+      <if test="createtime != null" >
+        CREATETIME,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+      <if test="content != null" >
+        CONTENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{id,jdbcType=INTEGER},
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="createuser != null" >
+        #{createuser,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.su.entity.Data" >
+    update data
+    <set >
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        URL = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="createuser != null" >
+        CREATEUSER = #{createuser,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        CREATETIME = #{createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        TYPE = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        CONTENT = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.su.entity.Data" >
+    update data
+    set NAME = #{name,jdbcType=VARCHAR},
+    URL = #{url,jdbcType=VARCHAR},
+    CREATEUSER = #{createuser,jdbcType=VARCHAR},
+    CREATETIME = #{createtime,jdbcType=VARCHAR},
+    STATUS = #{status,jdbcType=VARCHAR},
+    TYPE = #{type,jdbcType=VARCHAR},
+    CONTENT = #{content,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.su.entity.Data" >
+    update data
+    set NAME = #{name,jdbcType=VARCHAR},
+    URL = #{url,jdbcType=VARCHAR},
+    CREATEUSER = #{createuser,jdbcType=VARCHAR},
+    CREATETIME = #{createtime,jdbcType=VARCHAR},
+    STATUS = #{status,jdbcType=VARCHAR},
+    TYPE = #{type,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="queryPage" parameterType="java.util.Map" resultMap="BaseResultMap">
+
+    select * from `data`
+    <where>
+      <if test="type != null" >
+        TYPE = #{type,jdbcType=VARCHAR}
+      </if>
+    </where>
+
+
+     order BY CREATETIME DESC
+    limit #{beginIndex},#{endIndex}
+
+  </select>
+  <select id="queryPageCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select COUNT(id) as id from `data`
+    <where>
+      <if test="type != null" >
+        TYPE = #{type,jdbcType=VARCHAR}
+      </if>
+    </where>
+     order BY CREATETIME DESC
+  </select>
+</mapper>

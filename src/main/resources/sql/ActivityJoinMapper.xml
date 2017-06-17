@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.su.dao.ActivityJoinMapper" >
+  <resultMap id="BaseResultMap" type="com.su.entity.ActivityJoin" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="ACT_ID" property="actId" jdbcType="INTEGER" />
+    <result column="USERNAME" property="username" jdbcType="VARCHAR" />
+    <result column="PHONE" property="phone" jdbcType="VARCHAR" />
+    <result column="JOINTIME" property="jointime" jdbcType="VARCHAR" />
+    <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+    <result column="COMPANY" property="company" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="NUMBER" property="number" jdbcType="VARCHAR" />
+    <result column="RANDOMCODE" property="randomcode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+   ID, ACT_ID, USERNAME, PHONE, JOINTIME, EMAIL, COMPANY, STATUS, NUMBER, RANDOMCODE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from activity_join
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from activity_join
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.su.entity.ActivityJoin" >
+
+    insert into activity_join (ID, ACT_ID, USERNAME, 
+      PHONE, JOINTIME, EMAIL,COMPANY, NUMBER, RANDOMCODE
+      )
+    values (#{id,jdbcType=INTEGER}, #{actId,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{jointime,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{company,jdbcType=VARCHAR}, #{number,jdbcType=VARCHAR}, #{randomcode,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.su.entity.ActivityJoin" >
+    insert into activity_join
+      <if test="actId != null" >
+        ACT_ID,
+      </if>
+      <if test="username != null" >
+        USERNAME,
+      </if>
+      <if test="phone != null" >
+        PHONE,
+      </if>
+      <if test="jointime != null" >
+        JOINTIME,
+      </if>
+      <if test="email != null" >
+        EMAIL,
+      </if>
+      <if test="company != null" >
+        COMPANY,
+      </if>
+      <if test="number != null" >
+        NUMBER,
+      </if>
+      <if test="randomcode != null" >
+        RANDOMCODE,
+      </if>
+      <if test="actId != null" >
+        #{actId,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="jointime != null" >
+        #{jointime,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null" >
+        #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null" >
+        #{number,jdbcType=VARCHAR},
+      </if>
+      <if test="randomcode != null" >
+        #{randomcode,jdbcType=VARCHAR},
+      </if>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.su.entity.ActivityJoin" >
+    update activity_join
+    <set >
+      <if test="actId != null" >
+        ACT_ID = #{actId,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        USERNAME = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        PHONE = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="jointime != null" >
+        JOINTIME = #{jointime,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null" >
+        COMPANY = #{company,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null" >
+        NUMBER = #{number,jdbcType=VARCHAR},
+      </if>
+      <if test="randomcode != null" >
+        RANDOMCODE = #{randomcode,jdbcType=VARCHAR},
+      </if>
+
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.su.entity.ActivityJoin" >
+    update activity_join
+    set ACT_ID = #{actId,jdbcType=INTEGER},
+      USERNAME = #{username,jdbcType=VARCHAR},
+      PHONE = #{phone,jdbcType=VARCHAR},
+      JOINTIME = #{jointime,jdbcType=VARCHAR},
+      EMAIL = #{email,jdbcType=VARCHAR},
+      COMPANY = #{company,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+       NUMBER = #{number,jdbcType=VARCHAR},
+      RANDOMCODE = #{randomcode,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="countByActivityId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+select count(ID) AS ID FROM
+activity_join WHERE ACT_ID=#{activityId}
+  </select>
+  <select id="countByActivityJOIn" parameterType="java.lang.Integer" resultType="com.su.entity.ActivityJoin">
+  select ID, ACT_ID, USERNAME, PHONE, JOINTIME, EMAIL, COMPANY, STATUS, NUMBER, RANDOMCODE FROM
+  activity_join WHERE ACT_ID=#{activityId}
+  </select>
+
+
+
+
+
+
+  <select id="queryPage" parameterType="java.util.Map" resultMap="BaseResultMap">
+
+    select * from activity_join WHERE ACT_ID=#{activityId}
+
+
+  </select>
+  <select id="queryPageCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select COUNT(id) as id from activity_join WHERE ACT_ID=#{activityId}
+  </select>
+</mapper>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.su.dao.FrontMenuMapper" >
+  <resultMap id="BaseResultMap" type="com.su.entity.FrontMenu" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="MENUNAME" property="menuname" jdbcType="VARCHAR" />
+    <result column="MENUURL" property="menuurl" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="MENUCREATEUSER" property="menucreateuser" jdbcType="VARCHAR" />
+    <result column="MENUCREATETIME" property="menucreatetime" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, MENUNAME, MENUURL, STATUS, MENUCREATEUSER, MENUCREATETIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from front_menu
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from front_menu
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.su.entity.FrontMenu" >
+
+    insert into front_menu (ID, MENUNAME, MENUURL, 
+      STATUS, MENUCREATEUSER, MENUCREATETIME
+      )
+    values (#{id,jdbcType=INTEGER}, #{menuname,jdbcType=VARCHAR}, #{menuurl,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{menucreateuser,jdbcType=VARCHAR}, #{menucreatetime,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.su.entity.FrontMenu" >
+
+    insert into front_menu
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      ID,
+      <if test="menuname != null" >
+        MENUNAME,
+      </if>
+      <if test="menuurl != null" >
+        MENUURL,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="menucreateuser != null" >
+        MENUCREATEUSER,
+      </if>
+      <if test="menucreatetime != null" >
+        MENUCREATETIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{id,jdbcType=INTEGER},
+      <if test="menuname != null" >
+        #{menuname,jdbcType=VARCHAR},
+      </if>
+      <if test="menuurl != null" >
+        #{menuurl,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="menucreateuser != null" >
+        #{menucreateuser,jdbcType=VARCHAR},
+      </if>
+      <if test="menucreatetime != null" >
+        #{menucreatetime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.su.entity.FrontMenu" >
+    update front_menu
+    <set >
+      <if test="menuname != null" >
+        MENUNAME = #{menuname,jdbcType=VARCHAR},
+      </if>
+      <if test="menuurl != null" >
+        MENUURL = #{menuurl,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="menucreateuser != null" >
+        MENUCREATEUSER = #{menucreateuser,jdbcType=VARCHAR},
+      </if>
+      <if test="menucreatetime != null" >
+        MENUCREATETIME = #{menucreatetime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.su.entity.FrontMenu" >
+    update front_menu
+    set MENUNAME = #{menuname,jdbcType=VARCHAR},
+      MENUURL = #{menuurl,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      MENUCREATEUSER = #{menucreateuser,jdbcType=VARCHAR},
+      MENUCREATETIME = #{menucreatetime,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="queryPage" parameterType="java.util.Map" resultMap="BaseResultMap">
+
+    select * from front_menu order BY MENUCREATETIME DESC
+
+
+        limit #{beginIndex},#{endIndex}
+
+
+
+  </select>
+  <select id="queryAllese" parameterType="java.util.Map" resultMap="BaseResultMap">
+ select * from front_menu order BY MENUCREATETIME DESC
+      </select>
+
+
+  <select id="queryPageCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select COUNT(id) as id from front_menu order BY MENUCREATETIME DESC
+  </select>
+
+</mapper>

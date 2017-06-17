@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.su.dao.ActivityMapper" >
+  <resultMap id="BaseResultMap" type="com.su.entity.Activity" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="ACTIVITYENAME" property="activityename" jdbcType="VARCHAR" />
+    <result column="ACTIVITYSTATUS" property="activitystatus" jdbcType="VARCHAR" />
+    <result column="CREATETIME" property="createtime" jdbcType="VARCHAR" />
+    <result column="STARTTIME" property="starttime" jdbcType="VARCHAR" />
+    <result column="ENDTIME" property="endtime" jdbcType="VARCHAR" />
+    <result column="CONTENT" property="content" jdbcType="VARCHAR" />
+    <result column="CREATEUSER" property="createuser" jdbcType="VARCHAR" />
+    <result column="TEACHER" property="teacher" jdbcType="VARCHAR" />
+    <result column="LOCATION" property="location" jdbcType="VARCHAR" />
+    <result column="RANDOMCODE" property="randomcode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, ACTIVITYENAME, ACTIVITYSTATUS, CREATETIME, STARTTIME, ENDTIME, CONTENT, CREATEUSER,
+    TEACHER, LOCATION,RANDOMCODE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from activity
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from activity
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.su.entity.Activity" >
+    insert into activity (ID, ACTIVITYENAME, ACTIVITYSTATUS,
+    CREATETIME, STARTTIME, ENDTIME,
+    CONTENT, CREATEUSER, TEACHER,
+    LOCATION,RANDOMCODE)
+    values (#{id,jdbcType=INTEGER}, #{activityename,jdbcType=VARCHAR}, #{activitystatus,jdbcType=VARCHAR},
+    #{createtime,jdbcType=VARCHAR}, #{starttime,jdbcType=VARCHAR}, #{endtime,jdbcType=VARCHAR},
+    #{content,jdbcType=VARCHAR}, #{createuser,jdbcType=VARCHAR}, #{teacher,jdbcType=VARCHAR},
+    #{location,jdbcType=VARCHAR},#{randomcode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.su.entity.Activity" >
+
+    insert into activity
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      ID,
+      <if test="activityename != null" >
+        ACTIVITYENAME,
+      </if>
+      <if test="activitystatus != null" >
+        ACTIVITYSTATUS,
+      </if>
+      <if test="createtime != null" >
+        CREATETIME,
+      </if>
+      <if test="starttime != null" >
+        STARTTIME,
+      </if>
+      <if test="endtime != null" >
+        ENDTIME,
+      </if>
+      <if test="content != null" >
+        CONTENT,
+      </if>
+      <if test="createuser != null" >
+        CREATEUSER,
+      </if>
+      <if test="teacher != null" >
+        TEACHER,
+      </if>
+      <if test="location != null" >
+        LOCATION,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{id,jdbcType=INTEGER},
+      <if test="activityename != null" >
+        #{activityename,jdbcType=VARCHAR},
+      </if>
+      <if test="activitystatus != null" >
+        #{activitystatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="starttime != null" >
+        #{starttime,jdbcType=VARCHAR},
+      </if>
+      <if test="endtime != null" >
+        #{endtime,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="createuser != null" >
+        #{createuser,jdbcType=VARCHAR},
+      </if>
+      <if test="teacher != null" >
+        #{teacher,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null" >
+        #{location,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.su.entity.Activity" >
+    update activity
+    <set >
+      <if test="activityename != null" >
+        ACTIVITYENAME = #{activityename,jdbcType=VARCHAR},
+      </if>
+      <if test="activitystatus != null" >
+        ACTIVITYSTATUS = #{activitystatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        CREATETIME = #{createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="starttime != null" >
+        STARTTIME = #{starttime,jdbcType=VARCHAR},
+      </if>
+      <if test="endtime != null" >
+        ENDTIME = #{endtime,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        CONTENT = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="createuser != null" >
+        CREATEUSER = #{createuser,jdbcType=VARCHAR},
+      </if>
+      <if test="teacher != null" >
+        TEACHER = #{teacher,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null" >
+        LOCATION = #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="randomcode != null" >
+        RANDOMCODE = #{randomcode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.su.entity.Activity" >
+    update activity
+    set ACTIVITYENAME = #{activityename,jdbcType=VARCHAR},
+    ACTIVITYSTATUS = #{activitystatus,jdbcType=VARCHAR},
+    CREATETIME = #{createtime,jdbcType=VARCHAR},
+    STARTTIME = #{starttime,jdbcType=VARCHAR},
+    ENDTIME = #{endtime,jdbcType=VARCHAR},
+    CONTENT = #{content,jdbcType=VARCHAR},
+    CREATEUSER = #{createuser,jdbcType=VARCHAR},
+    TEACHER = #{teacher,jdbcType=VARCHAR},
+    LOCATION = #{location,jdbcType=VARCHAR},
+    RANDOMCODE = #{randomcode,jdbcType=VARCHAR},
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="queryPage" parameterType="java.util.Map" resultMap="BaseResultMap">
+
+    select * from activity order BY CREATETIME DESC
+    limit #{beginIndex},#{endIndex}
+
+  </select>
+  <select id="queryPageCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select COUNT(id) as id from activity order BY CREATETIME DESC
+  </select>
+</mapper>

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.su.dao.SysRoleMapper">
+	<resultMap id="BaseResultMap" type="com.su.entity.SysRole">
+		<id column="ID" property="id" jdbcType="INTEGER" />
+		<result column="ROLE_NAME" property="roleName" jdbcType="VARCHAR" />
+		<result column="DESCS" property="desc" jdbcType="VARCHAR" />
+		<result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+		<result column="STAUTS" property="stauts" jdbcType="INTEGER" />
+		<result column="UPDATA_TIME" property="updataTime" jdbcType="VARCHAR" />
+		<result column="CREATE_USER_NAME" property="createUserName"
+			jdbcType="VARCHAR" />
+		<result column="UPDATA_USER_NAME" property="updataUserName"
+			jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		ID, ROLE_NAME, DESC, CREATE_TIME, STAUTS, UPDATA_TIME,
+		CREATE_USER_NAME,
+		UPDATA_USER_NAME
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select ID, ROLE_NAME,DESCS, CREATE_TIME, STAUTS,
+		UPDATA_TIME, CREATE_USER_NAME,UPDATA_USER_NAME
+		from sys_role
+
+		where ID =
+		#{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		sys_role
+		where ID = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.su.entity.SysRole"
+		useGeneratedKeys="true" keyColumn="ID">
+		insert into sys_role (ID, ROLE_NAME,
+		DESCS,
+		CREATE_TIME, STAUTS,
+		UPDATA_TIME,
+		CREATE_USER_NAME,
+		UPDATA_USER_NAME)
+		values
+		(#{id,jdbcType=INTEGER},
+		#{roleName,jdbcType=VARCHAR},
+		#{desc,jdbcType=VARCHAR},
+		#{createTime,jdbcType=VARCHAR},
+		#{stauts,jdbcType=INTEGER},
+		#{updataTime,jdbcType=VARCHAR},
+		#{createUserName,jdbcType=VARCHAR},
+		#{updataUserName,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.su.entity.SysRole"
+		useGeneratedKeys="true" keyColumn="ID">
+		insert into sys_role
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ID,
+			<if test="roleName != null">
+				ROLE_NAME,
+			</if>
+			<if test="desc != null">
+				DESCS,
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME,
+			</if>
+			<if test="stauts != null">
+				STAUTS,
+			</if>
+			<if test="updataTime != null">
+				UPDATA_TIME,
+			</if>
+			<if test="createUserName != null">
+				CREATE_USER_NAME,
+			</if>
+			<if test="updataUserName != null">
+				UPDATA_USER_NAME,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			#{id,jdbcType=INTEGER},
+			<if test="roleName != null">
+				#{roleName,jdbcType=VARCHAR},
+			</if>
+			<if test="desc != null">
+				#{desc,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=VARCHAR},
+			</if>
+			<if test="stauts != null">
+				#{stauts,jdbcType=INTEGER},
+			</if>
+			<if test="updataTime != null">
+				#{updataTime,jdbcType=VARCHAR},
+			</if>
+			<if test="createUserName != null">
+				#{createUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="updataUserName != null">
+				#{updataUserName,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.su.entity.SysRole">
+		update sys_role
+		<set>
+			<if test="roleName != null">
+				ROLE_NAME = #{roleName,jdbcType=VARCHAR},
+			</if>
+			<if test="desc != null">
+				DESCS= #{desc,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+			</if>
+			<if test="stauts != null">
+				STAUTS = #{stauts,jdbcType=INTEGER},
+			</if>
+			<if test="updataTime != null">
+				UPDATA_TIME = #{updataTime,jdbcType=VARCHAR},
+			</if>
+			<if test="createUserName != null">
+				CREATE_USER_NAME = #{createUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="updataUserName != null">
+				UPDATA_USER_NAME = #{updataUserName,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.su.entity.SysRole">
+		update sys_role
+		set ROLE_NAME = #{roleName,jdbcType=VARCHAR},
+		DESCS
+		=#{desc,jdbcType=VARCHAR},
+		CREATE_TIME =
+		#{createTime,jdbcType=VARCHAR},
+		STAUTS = #{stauts,jdbcType=INTEGER},
+		UPDATA_TIME = #{updataTime,jdbcType=VARCHAR},
+		CREATE_USER_NAME =
+		#{createUserName,jdbcType=VARCHAR},
+		UPDATA_USER_NAME =
+		#{updataUserName,jdbcType=VARCHAR}
+		where ID = #{id,jdbcType=INTEGER}
+	</update>
+	<select id="queryPageCount" parameterType="java.util.Map"
+		resultType="java.lang.Integer">
+		select count(id) as id from sys_role
+		<where>
+			and STAUTS = 1
+		</where>
+
+	</select>
+	<select id="queryPage" parameterType="java.util.Map" resultMap="BaseResultMap">
+		select * from sys_role
+		<where>
+			and STAUTS = 1
+		</where>
+		limit #{beginIndex},#{endIndex}
+	</select>
+	<select id="loadAll" parameterType="java.util.Map" resultMap="BaseResultMap">
+		select * from sys_role where 1=1
+		<if test="status!=null">
+			and STAUTS=#{status}
+		</if>
+	</select>
+	<select id="queryByName" parameterType="java.util.Map"
+		resultMap="BaseResultMap">
+		select * from sys_role where ROLE_NAME=#{roleName}
+	</select>
+
+</mapper>

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.su.dao.BannerMapper" >
+  <resultMap id="BaseResultMap" type="com.su.entity.Banner" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="TITLE" property="title" jdbcType="VARCHAR" />
+    <result column="URL" property="url" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" jdbcType="INTEGER" />
+    <result column="CREATETIME" property="createtime" jdbcType="VARCHAR" />
+    <result column="CREATEUSER" property="createuser" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="ARTICLE_URL" property="articleUrl" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, NAME, TITLE, URL, TYPE, CREATETIME, CREATEUSER, STATUS, ARTICLE_URL
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from banner
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from banner
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.su.entity.Banner" >
+
+    insert into banner (ID, NAME, TITLE, 
+      URL, TYPE, CREATETIME, 
+      CREATEUSER, STATUS, ARTICLE_URL
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{url,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{createtime,jdbcType=VARCHAR}, 
+      #{createuser,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{articleUrl,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.su.entity.Banner" >
+
+    insert into banner
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      ID,
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="title != null" >
+        TITLE,
+      </if>
+      <if test="url != null" >
+        URL,
+      </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+      <if test="createtime != null" >
+        CREATETIME,
+      </if>
+      <if test="createuser != null" >
+        CREATEUSER,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="articleUrl != null" >
+        ARTICLE_URL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{id,jdbcType=INTEGER},
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="createuser != null" >
+        #{createuser,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="articleUrl != null" >
+        #{articleUrl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.su.entity.Banner" >
+    update banner
+    <set >
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        TITLE = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        URL = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        TYPE = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        CREATETIME = #{createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="createuser != null" >
+        CREATEUSER = #{createuser,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="articleUrl != null" >
+        ARTICLE_URL = #{articleUrl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.su.entity.Banner" >
+    update banner
+    set NAME = #{name,jdbcType=VARCHAR},
+      TITLE = #{title,jdbcType=VARCHAR},
+      URL = #{url,jdbcType=VARCHAR},
+      TYPE = #{type,jdbcType=INTEGER},
+      CREATETIME = #{createtime,jdbcType=VARCHAR},
+      CREATEUSER = #{createuser,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      ARTICLE_URL = #{articleUrl,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="queryPage" parameterType="java.util.Map" resultMap="BaseResultMap">
+
+    select * from banner where 1=1
+    <if test="type!=null">
+      and TYPE=#{type}
+    </if>
+    order BY CREATETIME DESC
+    limit #{beginIndex},#{endIndex}
+
+  </select>
+  <select id="queryPageCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select COUNT(id) as id from banner
+    where 1=1
+    <if test="type!=null">
+      and TYPE=#{type}
+    </if>
+     order BY CREATETIME DESC
+  </select>
+
+</mapper>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.su.dao.MenuDao">
+	<resultMap id="BaseMenuMap" type="com.su.entity.Menu" >
+	    <result column="ID" property="id" jdbcType="INTEGER" />
+	    <result column="MENU_NAME" property="menuName" jdbcType="VARCHAR" />
+	    <result column="ICON" property="icon" jdbcType="VARCHAR" />
+	    <result column="LINK" property="link" jdbcType="VARCHAR" />
+	    <result column="PARENT_ID" property="parentId" jdbcType="INTEGER" />
+	    <result column="SHOW_MENU" property="shwoMenu" jdbcType="INTEGER" />
+	    <result column="DESC" property="desc" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="loadAllMenu" parameterType="java.util.Map" resultMap="BaseMenuMap">
+		SELECT DISTINCT M.id,M.MENU_NAME,M.ICON,M.LINK,M.PARENT_ID,M.SHOW_MENU FROM SYS_MENU M
+		<if test="roleId != 0">
+			,sys_user u,sys_role_menu rm where M.id = rm.MENU_ID and u.ROLE_ID = #{roleId} and u.ROLE_ID = rm.ROLE_ID
+		</if>
+	</select>
+<select id="loadAll" parameterType="java.util.Map" resultMap="BaseMenuMap">
+		SELECT * FROM SYS_MENU 
+</select>
+</mapper>
